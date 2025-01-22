@@ -30,5 +30,33 @@ public class BaseTest {
     }
 
     //getRequest method
+    public static Response getRequest(String endPoint, Integer expectedStatusCode){
+        Response response = given()
+                .spec(requestSpecification)
+                .when()
+                .log().all()
+                .get(endPoint)
+                .then()
+                .log().all()
+                .statusCode(expectedStatusCode)
+                .extract().response();
+        return response;
+    }
+
+
+    //putRequest method
+    public static Response putRequest(String endPoint, Integer expectedStatusCode, Object body){
+        Response response = given()
+                .spec(requestSpecification)
+                .body(body)
+                .when()
+                .log().all()
+                .put(endPoint)
+                .then()
+                .log().all()
+                .statusCode(expectedStatusCode)
+                .extract().response();
+        return response;
+    }
 
 }

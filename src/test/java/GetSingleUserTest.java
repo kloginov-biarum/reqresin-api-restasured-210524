@@ -1,14 +1,15 @@
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GetSingleUserTest {
+public class GetSingleUserTest extends BaseTest {
 
     @Test
     public void getSingleUserTest() {
-
+/*
       Integer userId = 5;
       UserDataResponse response = given().baseUri("https://reqres.in")
                 .when().log().all()
@@ -25,7 +26,25 @@ public class GetSingleUserTest {
         response.getEmail().endsWith("@reqres.in");
 
         //Check that avatar ends with "id-image.jpg"
-        assertTrue(response.getAvatar().endsWith(userId + "-image.jpg"));
+        assertTrue(response.getAvatar().endsWith(userId + "-image.jpg"));*/
+
+
+
+
+
+
+        Response response = getRequest("/api/users/5", 200);
+        UserDataResponse responseBodyData
+                = response.body().jsonPath().getObject("data", UserDataResponse.class);
+
+        //Check that userId in response is equal to id from request
+        assertEquals(5, responseBodyData.getId());
+        //Check that email ends with "@reqres.in"
+        assertTrue(responseBodyData.getEmail().endsWith("@reqres.in"));
+
+        //Check that avatar ends with "id-image.jpg"
+        assertTrue(responseBodyData.getAvatar().endsWith(responseBodyData.getId() + "-image.jpg"));
+
     }
 
 }

@@ -3,7 +3,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static java.lang.Integer.parseInt;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CreateUser extends BaseTest{
@@ -26,6 +27,19 @@ public class CreateUser extends BaseTest{
         System.out.println(response.getName());*/
 
        Response response =  postRequest("/api/users", 201, requestBody);
+       SuccessfulCreateUserResponse responseBody =  response.as(SuccessfulCreateUserResponse.class);
+        //Check that name is the same as in request
+        assertEquals(name, responseBody.getName());
+
+        //Check that job is the same as in request
+        assertEquals("QA", responseBody.getJob());
+        //Check that id is not empty and ud value >0 (positive):
+        assertFalse(responseBody.getId().isEmpty());
+        assertTrue(parseInt(responseBody.getId())>0);
+
+        //Check that createdAt is not empty and contains 2025 year
+        assertFalse(responseBody.getCreatedAt().isEmpty());
+        assertTrue(responseBody.getCreatedAt().contains("2025"));
 
     }
 }
