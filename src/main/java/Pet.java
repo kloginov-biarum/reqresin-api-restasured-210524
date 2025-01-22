@@ -1,8 +1,10 @@
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-@Getter@Setter
+@Getter@Setter@NoArgsConstructor@AllArgsConstructor
 public class Pet {
   private long id;
   private Category category;
@@ -11,12 +13,12 @@ public class Pet {
     private List<Tag> tags;
     private String status;
 
-    @Getter@Setter
+    @Getter@Setter@NoArgsConstructor@AllArgsConstructor
 public static class Category {
   private long id;
   private String name;
 }
-    @Getter@Setter
+    @Getter@Setter@NoArgsConstructor@AllArgsConstructor
 public static class Tag {
     private long id;
     private String name;

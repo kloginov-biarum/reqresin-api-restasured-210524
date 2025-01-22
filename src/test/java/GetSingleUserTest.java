@@ -23,6 +23,7 @@ public class GetSingleUserTest {
         //Check that email ends with "@reqres.in"
         response.getEmail().contains("@reqres.in");
         response.getEmail().endsWith("@reqres.in");
+
         //Check that avatar ends with "id-image.jpg"
         assertTrue(response.getAvatar().endsWith(userId + "-image.jpg"));
     }
