@@ -59,4 +59,18 @@ public class BaseTest {
         return response;
     }
 
+    //deleteRequest method
+    public static Response deleteRequest(String endPoint, Integer expectedStatusCode){
+        Response response = given()
+                .spec(requestSpecification)
+                .when()
+                .log().all()
+                .delete(endPoint)
+                .then()
+                .log().all()
+                .statusCode(expectedStatusCode)
+                .extract().response();
+        return response;
+    }
+
 }

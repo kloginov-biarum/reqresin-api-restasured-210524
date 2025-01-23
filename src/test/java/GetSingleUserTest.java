@@ -31,9 +31,14 @@ public class GetSingleUserTest extends BaseTest {
 
 
 
+        //Crete user
+        CreateUserRequest requestBodyCreate = new CreateUserRequest("John", "Junior QA");
+        Response response = postRequest("/api/users", 201, requestBodyCreate);
+        SuccessfulCreateUserResponse responseBodyCreate = response.as(SuccessfulCreateUserResponse.class);
 
 
-        Response response = getRequest("/api/users/5", 200);
+        //Get user by id
+        Response responseGet = getRequest("/api/users/" + responseBodyCreate.getId(), 200);
         UserDataResponse responseBodyData
                 = response.body().jsonPath().getObject("data", UserDataResponse.class);
 
@@ -45,6 +50,9 @@ public class GetSingleUserTest extends BaseTest {
         //Check that avatar ends with "id-image.jpg"
         assertTrue(responseBodyData.getAvatar().endsWith(responseBodyData.getId() + "-image.jpg"));
 
+
+        //Delete user
+        deleteRequest("/api/users/" + responseBodyCreate.getId(), 204);
     }
 
 }
